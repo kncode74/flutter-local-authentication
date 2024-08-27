@@ -18,5 +18,6 @@ File : android/app/src/main/AndroidManifest.xml
 
 
 https://github.com/user-attachments/assets/edcc20ba-01e5-4452-a930-64137a677fe9
+
 [android_auth.webm](https://github.com/user-attachments/assets/17b1bfe3-340e-4b42-b968-60967346a11a)
 
