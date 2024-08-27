@@ -1,7 +1,7 @@
 # biometrics_auth
 
 	      Android	  iOS	  macOS	  Windows
-Support	SDK 16+*	12.0+	10.14+	Windows 10+
+	Support	SDK 16+*  12.0+	 10.14+	  Windows 10+
 
 # local_auth: ^2.3.0
 
