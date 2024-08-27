@@ -1,3 +1,4 @@
+## fingerprint and  face recognition.
 # biometrics_auth
 
 	      		Android	  iOS	  macOS	  Windows
@@ -5,10 +6,10 @@
 
 # local_auth: ^2.3.0
 
-# iOS Integration
+1. iOS Integration
 File : ios/Runner/Info.plist
 
-# Android Integration
+2. Android Integration
 set  a FragmentActivity instead of an Activity. 
 File : android/app/src/main/kotlin/com/example/biometrics_auth/MainActivity.kt
 
