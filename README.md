@@ -1,9 +1,8 @@
 # biometrics_auth
 
-A new Flutter project.
-for research Biometrics such as fingerprint or facial recognition.
+	      Android	  iOS	  macOS	  Windows
+Support	SDK 16+*	12.0+	10.14+	Windows 10+
 
-## Getting Started
 # local_auth: ^2.3.0
 
 # iOS Integration
