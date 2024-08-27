@@ -6,10 +6,10 @@ for research Biometrics such as fingerprint or facial recognition.
 ## Getting Started
 # local_auth: ^2.3.0
 
-#iOS Integration
+# iOS Integration
 File : ios/Runner/Info.plist
 
-#Android Integration
+# Android Integration
 set  a FragmentActivity instead of an Activity. 
 File : android/app/src/main/kotlin/com/example/biometrics_auth/MainActivity.kt
 
