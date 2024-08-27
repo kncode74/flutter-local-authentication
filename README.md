@@ -6,6 +6,11 @@
 
 	dependencies:
  	 	local_auth: ^2.3.0
+    
+   	BiometricType.face
+	BiometricType.fingerprint
+	BiometricType.weak
+	BiometricType.strong
 
 ### iOS Integration
 File : ios/Runner/Info.plist
