@@ -4,7 +4,8 @@
 	      		Android	  iOS	  macOS	  Windows
 	Support		SDK 16+*  12.0+	 10.14+	  Windows 10+
 
-# local_auth: ^2.3.0
+	dependencies:
+ 	 	local_auth: ^2.3.0
 
 ### iOS Integration
 File : ios/Runner/Info.plist
