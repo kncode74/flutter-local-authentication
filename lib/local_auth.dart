@@ -27,6 +27,7 @@ class _LocalAuthState extends State<LocalAuth> {
   Future<void> _getBiometricsType() async {
     List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
+
     print('List of Biometrics : $availableBiometrics');
 
     if (!mounted) return;
@@ -39,7 +40,7 @@ class _LocalAuthState extends State<LocalAuth> {
         localizedReason: 'Please authenticate to access your bank account',
         options: const AuthenticationOptions(
           stickyAuth: true,
-          biometricOnly: true,
+          biometricOnly: false,
         ),
       )
           .then((bool isAuth) {
@@ -101,7 +102,7 @@ class _LocalAuthState extends State<LocalAuth> {
       onPressed: () {
         _getBiometricsType();
       },
-      child: Text('Authen type'),
+      child: const Text('Authen type'),
     );
   }
 
