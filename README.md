@@ -4,14 +4,18 @@ A new Flutter project.
 for research Biometrics such as fingerprint or facial recognition.
 
 ## Getting Started
+# local_auth: ^2.3.0
 
-This project is a starting point for a Flutter application.
+#iOS Integration
+File : ios/Runner/Info.plist
 
-A few resources to get you started if this is your first Flutter project:
+#Android Integration
+set  a FragmentActivity instead of an Activity. 
+File : android/app/src/main/kotlin/com/example/biometrics_auth/MainActivity.kt
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+set Permission
+File : android/app/src/main/AndroidManifest.xml
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+https://github.com/user-attachments/assets/edcc20ba-01e5-4452-a930-64137a677fe9
+
