@@ -24,6 +24,14 @@ class _LocalAuthState extends State<LocalAuth> {
     });
   }
 
+  //Step 1: check device have Biometric and supported
+  Future<bool> _canAuthenticate() async {
+    final bool haveBiometric = await auth.canCheckBiometrics;
+    final bool canAuthenticate =
+        haveBiometric && await auth.isDeviceSupported();
+    return canAuthenticate;
+  }
+
   Future<void> _getBiometricsType() async {
     List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
@@ -40,7 +48,7 @@ class _LocalAuthState extends State<LocalAuth> {
         localizedReason: 'Please authenticate to access your bank account',
         options: const AuthenticationOptions(
           stickyAuth: true,
-          biometricOnly: false,
+          biometricOnly: true,
         ),
       )
           .then((bool isAuth) {
@@ -108,7 +116,9 @@ class _LocalAuthState extends State<LocalAuth> {
 
   Widget _authenContent() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
+        bool canAuthenticate = await _canAuthenticate();
+        if (!canAuthenticate) return;
         _authenticate();
       },
       style: ElevatedButton.styleFrom(
