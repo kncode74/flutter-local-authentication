@@ -9,7 +9,7 @@ class LocalAuth extends StatefulWidget {
   State<LocalAuth> createState() => _LocalAuthState();
 }
 
-class _LocalAuthState extends State<LocalAuth> {
+class _LocalAuthState extends State<LocalAuth> with WidgetsBindingObserver {
   late final LocalAuthentication auth;
   bool _supportState = false;
 
@@ -22,6 +22,25 @@ class _LocalAuthState extends State<LocalAuth> {
         _supportState = isSupported;
       });
     });
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // ยกเลิก WidgetsBindingObserver
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // ตรวจสอบสถานะของแอป
+    if (state == AppLifecycleState.paused) {
+      print("แอปถูกย่อหน้าต่าง");
+    } else if (state == AppLifecycleState.resumed) {
+      print("แอปถูกเปิดขึ้นใหม่");
+      // ทำงานเมื่อกลับเข้าแอปใหม่
+    }
   }
 
   //Step 1: check device have Biometric and supported
@@ -37,7 +56,10 @@ class _LocalAuthState extends State<LocalAuth> {
         await auth.getAvailableBiometrics();
 
     print('List of Biometrics : $availableBiometrics');
-
+    //[wrong,
+    // weak,
+    // face,
+    // fingerprint]
     if (!mounted) return;
   }
 
