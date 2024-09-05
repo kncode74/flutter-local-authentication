@@ -1,4 +1,5 @@
 import 'package:biometrics_auth/local_auth.dart';
+import 'package:biometrics_auth/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           // secondary: Colors.amberAccent.shade100,
         ),
       ),
-      home: const LocalAuth(),
+      home: const SplashScreen(),
     );
   }
 }
