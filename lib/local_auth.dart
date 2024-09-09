@@ -9,7 +9,7 @@ class LocalAuth extends StatefulWidget {
   State<LocalAuth> createState() => _LocalAuthState();
 }
 
-class _LocalAuthState extends State<LocalAuth> {
+class _LocalAuthState extends State<LocalAuth> with WidgetsBindingObserver {
   late final LocalAuthentication auth;
   bool _supportState = false;
 
@@ -22,6 +22,33 @@ class _LocalAuthState extends State<LocalAuth> {
         _supportState = isSupported;
       });
     });
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // ยกเลิก WidgetsBindingObserver
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // ตรวจสอบสถานะของแอป
+    if (state == AppLifecycleState.paused) {
+      print("แอปถูกย่อหน้าต่าง");
+    } else if (state == AppLifecycleState.resumed) {
+      print("แอปถูกเปิดขึ้นใหม่");
+      // ทำงานเมื่อกลับเข้าแอปใหม่
+    }
+  }
+
+  //Step 1: check device have Biometric and supported
+  Future<bool> _canAuthenticate() async {
+    final bool haveBiometric = await auth.canCheckBiometrics;
+    final bool canAuthenticate =
+        haveBiometric && await auth.isDeviceSupported();
+    return canAuthenticate;
   }
 
   Future<void> _getBiometricsType() async {
@@ -29,7 +56,10 @@ class _LocalAuthState extends State<LocalAuth> {
         await auth.getAvailableBiometrics();
 
     print('List of Biometrics : $availableBiometrics');
-
+    //[wrong,
+    // weak,
+    // face,
+    // fingerprint]
     if (!mounted) return;
   }
 
@@ -40,7 +70,7 @@ class _LocalAuthState extends State<LocalAuth> {
         localizedReason: 'Please authenticate to access your bank account',
         options: const AuthenticationOptions(
           stickyAuth: true,
-          biometricOnly: false,
+          biometricOnly: true,
         ),
       )
           .then((bool isAuth) {
@@ -108,7 +138,9 @@ class _LocalAuthState extends State<LocalAuth> {
 
   Widget _authenContent() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
+        bool canAuthenticate = await _canAuthenticate();
+        if (!canAuthenticate) return;
         _authenticate();
       },
       style: ElevatedButton.styleFrom(
