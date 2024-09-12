@@ -9,63 +9,45 @@ class LocalAuth extends StatefulWidget {
   State<LocalAuth> createState() => _LocalAuthState();
 }
 
-class _LocalAuthState extends State<LocalAuth> with WidgetsBindingObserver {
-  late final LocalAuthentication auth;
+class _LocalAuthState extends State<LocalAuth> {
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+
   bool _supportState = false;
 
   @override
   void initState() {
-    super.initState();
-    auth = LocalAuthentication();
-    auth.isDeviceSupported().then((bool isSupported) {
+    _localAuthentication.isDeviceSupported().then((bool isSupported) {
       setState(() {
         _supportState = isSupported;
       });
     });
-    WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
-  @override
-  void dispose() {
-    // ยกเลิก WidgetsBindingObserver
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
+  Future<bool> _checkAuthenticate() async {
+    final bool haveBiometric = await _localAuthentication.canCheckBiometrics;
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // ตรวจสอบสถานะของแอป
-    if (state == AppLifecycleState.paused) {
-      print("แอปถูกย่อหน้าต่าง");
-    } else if (state == AppLifecycleState.resumed) {
-      print("แอปถูกเปิดขึ้นใหม่");
-      // ทำงานเมื่อกลับเข้าแอปใหม่
-    }
-  }
-
-  //Step 1: check device have Biometric and supported
-  Future<bool> _canAuthenticate() async {
-    final bool haveBiometric = await auth.canCheckBiometrics;
-    final bool canAuthenticate =
-        haveBiometric && await auth.isDeviceSupported();
-    return canAuthenticate;
+    final bool deviceSupport = await _localAuthentication.isDeviceSupported();
+    return haveBiometric && deviceSupport;
   }
 
   Future<void> _getBiometricsType() async {
     List<BiometricType> availableBiometrics =
-        await auth.getAvailableBiometrics();
+        await _localAuthentication.getAvailableBiometrics();
 
     print('List of Biometrics : $availableBiometrics');
+
     //[wrong,
     // weak,
     // face,
     // fingerprint]
+
     if (!mounted) return;
   }
 
   Future<void> _authenticate() async {
     try {
-      auth
+      _localAuthentication
           .authenticate(
         localizedReason: 'Please authenticate to access your bank account',
         options: const AuthenticationOptions(
@@ -139,7 +121,7 @@ class _LocalAuthState extends State<LocalAuth> with WidgetsBindingObserver {
   Widget _authenContent() {
     return ElevatedButton(
       onPressed: () async {
-        bool canAuthenticate = await _canAuthenticate();
+        bool canAuthenticate = await _checkAuthenticate();
         if (!canAuthenticate) return;
         _authenticate();
       },

@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
 class AuthLifecycleObserver extends WidgetsBindingObserver {
+  bool _isAuth = false;
+
   init() {
     WidgetsBinding.instance.addObserver(this);
+    _triggerLifecycle();
   }
 
   _triggerLifecycle() {
+    if (_isAuth) return;
     didChangeAppLifecycleState(AppLifecycleState.resumed);
   }
 

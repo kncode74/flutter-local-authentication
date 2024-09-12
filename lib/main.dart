@@ -1,9 +1,11 @@
+import 'package:biometrics_auth/auth_lifecycle_observer.dart';
 import 'package:biometrics_auth/local_auth.dart';
 import 'package:biometrics_auth/splah_screen/splash_screen.view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
+  AuthLifecycleObserver().init();
   runApp(const MyApp());
 }
 
